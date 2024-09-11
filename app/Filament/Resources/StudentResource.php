@@ -26,6 +26,8 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Grid;
 
  
 
@@ -85,23 +87,26 @@ class StudentResource extends Resource
     }
     public static function infolist(Infolist $infolist): Infolist
     {
-            return $infolist
-                    ->schema([
-                        ImageEntry::make('header_image') -> label('Student Image') -> columns(1),
-                        TextEntry::make('first_name') -> label('First Name'),
-                        TextEntry::make('last_name') -> label('Last Name'),
-                        TextEntry::make('grade.grade_name') -> label('Grade'),
-                        TextEntry::make('subjects.subject_name')
-                            ->listWithLineBreaks()
-                            ->bulleted()
-                        
-
-  
-
-
-                    ]) ->columns(2);
-                
-                        
+        return $infolist
+        ->schema([
+            Grid::make(2)
+                ->schema([
+                    Section::make('Student Details')
+                        ->schema([
+                            ImageEntry::make('header_image')->label('Student Image')->columns(1),
+                            TextEntry::make('first_name')->label('First Name'),
+                            TextEntry::make('last_name')->label('Last Name'),
+                            TextEntry::make('grade.grade_name')->label('Grade'),
+                        ])->columns(2),
+                    Section::make('Subjects')
+                        ->schema([
+                            TextEntry::make('subjects.subject_name')->default('No Subjects')
+                                ->listWithLineBreaks()
+                                ->bulleted(),
+                        ])
+                ])
+        ])->columns(2);
+                    
     }
 
 
