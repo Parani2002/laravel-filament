@@ -29,7 +29,7 @@ class SubjectsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('subject')
+            ->recordTitleAttribute('subject_name')
             ->columns([
                 Tables\Columns\TextColumn::make('subject_name'),
             ])
@@ -37,17 +37,13 @@ class SubjectsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make() -> label('attach')
-                ->form(fn (AttachAction $action):array => [
-                    $action -> getRecordSelect()->multiple(),
+                Tables\Actions\AttachAction::make()->form(fn (AttachAction $action):array=>[
+                    $action->getRecordSelect()->multiple(),
                 ]),
             ])
             ->actions([
+                Tables\Actions\DetachAction::make()
                 
-                Tables\Actions\DeleteAction::make() -> label('detach')
-                ->form(fn (DetachAction $action):array => [
-                    $action -> getRecordSelect()->multiple(),
-                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

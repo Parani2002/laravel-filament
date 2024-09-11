@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Forms\Components\ColorPicker;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\ColorEntry;
+use Filament\Support\Enums\FontWeight;
 
 class GradeResource extends Resource
 {
@@ -29,7 +34,7 @@ class GradeResource extends Resource
                 Forms\Components\TextInput::make('grade_name') -> required() -> maxLength(255) -> rules('required'),
                 Forms\Components\TextInput::make('grade_group') ->integer() -> required(),
                 Forms\Components\TextInput::make('grade_order') ->inputMode('decimal') ->  required(),
-                ColorPicker::make('grade_color')
+                ColorPicker::make('grade_color')->required()
 
                 
                 
@@ -66,6 +71,21 @@ class GradeResource extends Resource
         return [
             SubjectsRelationManager::class,
         ];
+    }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+            return $infolist
+                    ->schema([
+                        TextEntry::make('grade_name') -> label('Grade'),
+                        TextEntry::make('grade_group') -> label('Group'),
+                        TextEntry::make('grade_order') -> label('Order'),
+                        ColorEntry::make('grade_color') -> label('Color')->copyable(),
+                        TextEntry::make('subjects.subject_name')->weight(FontWeight::Bold)
+                            ->listWithLineBreaks()
+                            ->bulleted()
+                    ]) ->columns(2);
+                
+                        
     }
 
     public static function getPages(): array

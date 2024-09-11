@@ -42,6 +42,7 @@ class StudentResource extends Resource
                 Forms\Components\TextInput::make('first_name') ->label('First Name') -> required() -> maxLength(50),
                 Forms\Components\TextInput::make('last_name')-> label('Last Name')-> required() -> maxLength(50),
                 Select::make('grade_id')
+                    ->required()
                     ->label('Grade')
                     ->options(Grade::all()->pluck('grade_name', 'id'))
                     ->searchable()-> native(false)
