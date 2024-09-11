@@ -49,7 +49,7 @@ class GradeResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label(''),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
 

@@ -90,7 +90,7 @@ class StudentResource extends Resource
                         TextEntry::make('first_name') -> label('First Name'),
                         TextEntry::make('last_name') -> label('Last Name'),
                         TextEntry::make('grade.grade_name') -> label('Grade'),
-                        TextEntry::make('subject.subject_name')
+                        TextEntry::make('subjects.subject_name')
                             ->listWithLineBreaks()
                             ->bulleted()
                         
