@@ -14,6 +14,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Tables\Columns\ColorColumn;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\ColorEntry;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Grid;
+use App\Filament\Resources\GradeResource\RelationManagers\StudentsRelationManager;
+use App\Filament\Resources\SubjectResource\RelationManagers\GradesRelationManager;
 
 class SubjectResource extends Resource
 {
@@ -54,11 +62,41 @@ class SubjectResource extends Resource
                 ]),
             ]);
     }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+        ->schema([
+            Grid::make(2)
+                ->schema([
+                    Section::make('Subject Details')
+                        ->schema([
+                           
+                            TextEntry::make('subject_name')->label('Subject Name'),
+                            TextEntry::make('subject_order')->label('Subject Order'),
+                            TextEntry::make('color')->label('Subject Color'),
+                        ]),
+                    Section::make('Students')
+                        ->schema([
+                            TextEntry::make('students.first_name')->default('No Students')
+                                ->listWithLineBreaks()
+                                ->bulleted(),
+                        ]),
+                    Section::make('Grades')
+                        ->schema([
+                            TextEntry::make('grades.grade_name')->default('No Grades')
+                                ->listWithLineBreaks()
+                                ->bulleted(),
+                        ])
+                ])
+        ])->columns(2);
+                    
+    }
 
     public static function getRelations(): array
     {
         return [
-            //
+            StudentsRelationManager::class,
+            GradesRelationManager::class
         ];
     }
 

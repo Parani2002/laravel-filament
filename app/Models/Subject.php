@@ -21,7 +21,7 @@ class Subject extends Model
     {
         return $this->belongsToMany(Student::class);
     }
-    public function grade(): BelongsToMany
+    public function grades(): BelongsToMany
     {
         return $this->belongsToMany(Grade::class);
     }

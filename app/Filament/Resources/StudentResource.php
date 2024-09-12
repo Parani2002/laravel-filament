@@ -97,7 +97,7 @@ class StudentResource extends Resource
                             TextEntry::make('first_name')->label('First Name'),
                             TextEntry::make('last_name')->label('Last Name'),
                             TextEntry::make('grade.grade_name')->label('Grade'),
-                        ])->columns(2),
+                        ]),
                     Section::make('Subjects')
                         ->schema([
                             TextEntry::make('subjects.subject_name')->default('No Subjects')

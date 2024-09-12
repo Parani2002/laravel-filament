@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GradeResource\Pages;
 use App\Filament\Resources\GradeResource\RelationManagers;
+use App\Filament\Resources\GradeResource\RelationManagers\StudentsRelationManager;
 use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
 use App\Models\Grade;
 use Filament\Forms;
@@ -20,6 +21,8 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Support\Enums\FontWeight;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Grid;
 
 class GradeResource extends Resource
 {
@@ -70,21 +73,46 @@ class GradeResource extends Resource
     {
         return [
             SubjectsRelationManager::class,
+            StudentsRelationManager::class
         ];
     }
     public static function infolist(Infolist $infolist): Infolist
     {
+            // return $infolist
+            //         ->schema([
+            //             TextEntry::make('grade_name') -> label('Grade'),
+            //             TextEntry::make('grade_group') -> label('Group'),
+            //             TextEntry::make('grade_order') -> label('Order'),
+            //             ColorEntry::make('grade_color') -> label('Color')->copyable(),
+            //             TextEntry::make('subjects.subject_name')->weight(FontWeight::Bold)
+            //                 ->listWithLineBreaks()
+            //                 ->bulleted()
+            //         ]) ->columns(2);
             return $infolist
-                    ->schema([
-                        TextEntry::make('grade_name') -> label('Grade'),
-                        TextEntry::make('grade_group') -> label('Group'),
-                        TextEntry::make('grade_order') -> label('Order'),
-                        ColorEntry::make('grade_color') -> label('Color')->copyable(),
-                        TextEntry::make('subjects.subject_name')->weight(FontWeight::Bold)
-                            ->listWithLineBreaks()
-                            ->bulleted()
-                    ]) ->columns(2);
-                
+        ->schema([
+            Grid::make(2)
+                ->schema([
+                    Section::make('Grade Details')
+                        ->schema([
+                            TextEntry::make('grade_name') -> label('Grade'),
+                            TextEntry::make('grade_group') -> label('Group'),
+                            TextEntry::make('grade_order') -> label('Order'),
+                            ColorEntry::make('grade_color') -> label('Color')->copyable()
+                        ])->columns(2),
+                    Section::make('Subjects')
+                        ->schema([
+                            TextEntry::make('subjects.subject_name')->default('No Subjects')
+                                ->listWithLineBreaks()
+                                ->bulleted(),
+                        ]),
+                    Section::make('Students')
+                        ->schema([
+                            TextEntry::make('students.first_name')->default('No Students')
+                                ->listWithLineBreaks()
+                                ->bulleted(),
+                        ])
+                ])
+        ])->columns(2);
                         
     }
 
