@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 class GradeStudentsChart extends ChartWidget
 {
     protected static ?string $heading = 'GradeStudents Overview';
+    protected static ?int $sort = 2;
+    
 
     protected function getData(): array
     {
