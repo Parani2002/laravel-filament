@@ -30,6 +30,7 @@ class GradeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Grade Management';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

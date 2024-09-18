@@ -35,8 +35,11 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
+          
             ->brandName('Jaffna Hindu College')
             // ->brandLogo(asset('images/jhc_logo.png'))
+            ->brandLogo(fn () => view('vendor.filament.components.brand'))
+       
             ->favicon(asset('images/jhc_logo.png'))
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
